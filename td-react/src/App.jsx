@@ -25,10 +25,11 @@ function MainContent() {
     </h3>
   )}
 
-function Footer(){
+function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <footer>
-      <h5>Tous droits réservés - MOSTAINE Moncef</h5>
+      <h5>© {currentYear} - MOSTAINE Moncef, Tous droits réservés</h5>
     </footer>
   )
 }
