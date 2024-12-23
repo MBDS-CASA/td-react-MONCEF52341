@@ -1,5 +1,5 @@
-import './App.css'
-import emsiLogo from '/emsi.jpg'
+import './App.css';
+import emsiLogo from '/emsi.jpg';
 
 
 function Header() {
@@ -14,13 +14,16 @@ function Header() {
   )
 }
 
-function MainContent(){
+function MainContent() {
+  const now = new Date();
+  const jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+  const mois = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+
   return (
     <h3>
-      Ici, nous afficherons des informations interessantes :) "
+      Bonjour, on est le {jours[now.getDay()]}, {now.getDate()} {mois[now.getMonth()]}, {now.getFullYear()} et il est {now.getHours().toString().padStart(2, '0')}:{now.getMinutes().toString().padStart(2, '0')}:{now.getSeconds().toString().padStart(2, '0')}
     </h3>
-  )
-}
+  )}
 
 function Footer(){
   return (
