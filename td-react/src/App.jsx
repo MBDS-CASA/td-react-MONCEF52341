@@ -1,13 +1,18 @@
 import { useState } from 'react'
 import './App.css'
 import reactLogo from './assets/react.svg'
+import emsiLogo from '/emsi.jpg'
 import viteLogo from '/vite.svg'
 
 
 function Header() {
   return (
     <header>
-      <h1>Header</h1>
+      <h1>Introduction à React</h1>
+      <h4>A la découverte des premières notions de React</h4>
+      <a href="#" target="_blank">
+          <img src={emsiLogo} className="logo" alt="Vite logo" />
+        </a>
     </header>
   )
 }
@@ -17,8 +22,8 @@ function App() {
 
   return (
     <>
+    <Header />
       <div>
-        <Header />
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
