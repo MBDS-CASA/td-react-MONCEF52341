@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import emsiLogo from '/emsi.jpg'
 
@@ -23,13 +22,21 @@ function MainContent(){
   )
 }
 
+function Footer(){
+  return (
+    <footer>
+      <h5>Tous droits réservés - MOSTAINE Moncef</h5>
+    </footer>
+  )
+}
+
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
     <Header />
     <MainContent />
+    <Footer />
     </>
   )
 }
