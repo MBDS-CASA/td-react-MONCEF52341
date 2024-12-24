@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEffect, useState } from "react";
 import "./App.css";
+import DataTable from "./components/DataTable";
 import GradeInfo from "./components/GradeInfo";
 import Menu from "./components/Menu";
-import gradeData from "./data.json";
+import gradeData from "./data/data.json";
 import { getRandomItem } from "./utils/random";
 import emsiLogo from "/emsi.jpg";
 
@@ -39,19 +43,18 @@ function MainContent() {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const gradeInterval = setInterval(() => {
       setRandomGrade(getRandomItem(gradeData));
     }, 5000);
 
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(gradeInterval);
+      clearInterval(timer);
+    };
   }, []);
 
   const jours = [
@@ -80,19 +83,42 @@ function MainContent() {
 
   return (
     <main className="container mx-auto px-4 py-8 flex-grow">
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">
-          Bonjour, on est le {jours[currentTime.getDay()]},{" "}
-          {currentTime.getDate()} {mois[currentTime.getMonth()]},{" "}
-          {currentTime.getFullYear()} et il est{" "}
-          <span className="font-mono bg-gray-100 px-2 py-1 rounded">
-            {currentTime.getHours().toString().padStart(2, "0")}:{currentTime
-              .getMinutes().toString().padStart(2, "0")}:{currentTime
-              .getSeconds().toString().padStart(2, "0")}
-          </span>
-        </h3>
-      </div>
-      {randomGrade && <GradeInfo gradeInfo={randomGrade} />}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle>Date et heure actuelles</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-xl font-semibold text-gray-800">
+            Bonjour, on est le {jours[currentTime.getDay()]},{" "}
+            {currentTime.getDate()} {mois[currentTime.getMonth()]},{" "}
+            {currentTime.getFullYear()} et il est{" "}
+            <span className="font-mono bg-gray-100 px-2 py-1 rounded">
+              {currentTime.getHours().toString().padStart(2, "0")}:{currentTime
+                .getMinutes().toString().padStart(2, "0")}:{currentTime
+                .getSeconds().toString().padStart(2, "0")}
+            </span>
+          </p>
+        </CardContent>
+      </Card>
+
+      <Tabs defaultValue="random" className="mb-8">
+        <TabsList>
+          <TabsTrigger value="random">Note Aléatoire</TabsTrigger>
+          <TabsTrigger value="table">Tableau de Données</TabsTrigger>
+        </TabsList>
+        <TabsContent value="random">
+          {randomGrade && <GradeInfo gradeInfo={randomGrade} />}
+          <Button
+            className="mt-4"
+            onClick={() => setRandomGrade(getRandomItem(gradeData))}
+          >
+            Générer une nouvelle note
+          </Button>
+        </TabsContent>
+        <TabsContent value="table">
+          <DataTable data={gradeData} />
+        </TabsContent>
+      </Tabs>
     </main>
   );
 }
